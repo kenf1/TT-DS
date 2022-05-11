@@ -11,7 +11,7 @@ execute:
 
 ## Background
 
-This script was written as a continuation of the [ITTF Rankings 2001-2020 project](https://github.com/kenf1/Kaggle_ITTF). Instead of having the data readily available in .csv format, I took on the task of collecting the data myself using webscraping.
+This script was written as a continuation of the [ITTF Rankings 2001-2020 data analysis and visualization project](https://github.com/kenf1/Kaggle_ITTF). Instead of having the data readily available in .csv format, I took on the task of collecting the data myself by web scraping the [ITTF rankings](https://www.ittf.com/rankings/) website.
 
 ## Scrape Data from ITTF Website
 
