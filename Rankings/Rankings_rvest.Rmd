@@ -121,6 +121,10 @@ ittf_data <- bulkData %>% filter(`Rank Only`<=n_players)
 ```
 
 ```{r}
+ittf_data
+```
+
+```{r}
 #made w/ ggplot
 ittf_data %>%
   ggplot(aes(Points,reorder(Name,Points),fill=Assoc))+
