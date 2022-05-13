@@ -1,0 +1,51 @@
+---
+title: "Player Equipment Choices"
+subtitle: "A Wiki Webscraper"
+author: "KF"
+format: 
+    html:
+        code-fold: true
+        code-tools: true
+execute: 
+  echo: true
+---
+
+## Background
+
+Because I wasn't able to find a source that contains most of the top player's equipment choices in a single page/location, I plan on scraping the data from a combination of sources (listed below).
+
+**Sources**
+
+- wikipedia (individual player pages)
+
+```{python}
+import pandas as pd
+```
+
+```{python}
+page = "https://en.wikipedia.org/wiki/Fan_Zhendong"
+
+#scrape from wiki infobox class
+infoboxes = pd.read_html(page,index_col=0,attrs={"class":"infobox vcard"})
+
+#indicator for num infoboxes extracted (should be 1)
+print("Extracted {num} infoboxes".format(num=len(infoboxes)))
+
+# infoboxes
+
+#wrangle extracted values
+necInfo = pd.DataFrame(infoboxes[0]).iloc[:10,:1].reset_index().rename(columns={"Fan Zhendong":"varName","Fan Zhendong.1":"varValue"})
+necInfo["pivotIndex"] = "FZD"
+
+#pivot to wide-view
+necInfo_new = necInfo.pivot(index="pivotIndex",columns="varName",values="varValue")
+```
+
+## Potential Issues
+
+- wiki might not have a page/information for lower-ranked/lesser-known players
+- not all infoboxes are formatted the same or labels are similar
+
+## Acknowledgments
+
+1. [Scrape wiki infobox](https://gist.github.com/aculich/b34868c098d94d614515)

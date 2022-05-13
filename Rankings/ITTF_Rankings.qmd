@@ -37,8 +37,7 @@ import re
 ```{python}
 #setup
 URL = "https://www.ittf.com/wp-content/uploads/2022/05/2022_19_SEN_MS.html"
-page = requests.get(URL)
-soup = BeautifulSoup(page.content,"html.parser")
+soup = BeautifulSoup(requests.get(URL).content,"html.parser")
 
 #scrape data
 results = soup.find(id="content")
@@ -52,14 +51,17 @@ results = soup.find(id="content")
 rankingType = results.find("td",class_="listdataleft").text.strip()
 
 #extract year
-datasetYear = str(re.findall("\\d{4}",rankingType))
-datasetYear = re.sub(r"[^a-zA-Z0-9]","",datasetYear)
+# datasetYear = str(re.findall("\\d{4}",rankingType))
+datasetYear = re.sub(r"[^a-zA-Z0-9]","",str(re.findall("\\d{4}",rankingType)))
 
-#extract competition
-datasetEvent = re.split("\\d{4}",rankingType)[0]
+#extract event & week
+competition = re.split("\\d{4}",rankingType)
 
-#extract week
-datasetWeek = re.split("\\d{4}",rankingType)[1]
+#event
+datasetEvent = competition[0]
+
+#week
+datasetWeek = competition[1]
 
 #store results of colNames (html table)
 headers_list = []
@@ -126,7 +128,7 @@ Because my plan to run this script periodically, I need to save the scraped resu
 # dfName = f'M_ITTF_{datetime.datetime.now().strftime("%m-%d-%Y")}.csv'
 
 #save to csv
-ittf_rank.to_csv("ITTF "+fullName+".csv",index=False)
+ittf_rank.to_csv(f"ITTF "+fullName+".csv",index=False)
 ```
 
 ## Create Figures

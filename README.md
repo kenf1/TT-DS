@@ -6,6 +6,8 @@ A collection of Data Science project(s) centered around a central theme: the exc
 
 1. ITTF Rankings
 
+1. Pro Player Equipment Choices
+
 ## Data Sources
 
 1. [ITTF Rankings](https://www.ittf.com/rankings/)
