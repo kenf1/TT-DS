@@ -52,7 +52,7 @@ rankingType = results.find("td",class_="listdataleft").text.strip()
 
 #extract year
 # datasetYear = str(re.findall("\\d{4}",rankingType))
-datasetYear = re.sub(r"[^a-zA-Z0-9]","",str(re.findall("\\d{4}",rankingType)))
+datasetYear = re.sub(r"[^0-9]","",str(re.findall("\\d{4}",rankingType)))
 
 #extract event & week
 competition = re.split("\\d{4}",rankingType)

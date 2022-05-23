@@ -76,7 +76,7 @@ regexText <- function(searchTerm,colName="."){
 }
 
 #extract rank change
-bulkData$rankChange <- regexText("\\s(↑|↓){1}\\d{1,3}") %>% str_replace_all(" ","")
+bulkData$rankChange <- regexText("(↑|↓){1}\\d{1,3}")
 
 #replace rank change w/ blank
 bulkData$. <- bulkData$. %>% str_replace("\\s(↑|↓){1}\\d{1,3}","")
@@ -85,7 +85,9 @@ bulkData$. <- bulkData$. %>% str_replace("\\s(↑|↓){1}\\d{1,3}","")
 bulkData$rank <- regexText("\\d{1,3}")
 
 #extract points
-bulkData$points <- regexText("\\d+\\s$") %>% str_replace_all(" ","") %>% as.numeric()
+bulkData$points <- regexText("\\d+\\s$") %>% 
+  str_replace_all(" ","") %>% 
+  as.numeric()
 
 #extract name
 bulkData$name <- regexText("[^0-9]+")
@@ -101,10 +103,12 @@ for(i in 1:nrow(bulkData)){
 #rm spaces + tidy even more
 bulkData <- bulkData %>% separate(name,as.character(1:6),sep=" ")
 bulkData$`5` <- ifelse(bulkData$`5`=="",NA,bulkData$`5`)
-bulkData$playerName <- paste(bulkData$`3`,bulkData$`4`,bulkData$`5`) %>% str_replace_all("NA","")
+bulkData$playerName <- paste(bulkData$`3`,bulkData$`4`,bulkData$`5`) %>% 
+  str_replace_all("NA","")
 
 #final ver
-bulkData <- bulkData %>% select(contains(c("rank","player","assoc","points"))) %>% relocate("rankChange",.after="rank")
+bulkData <- bulkData %>% select(contains(c("rank","player","assoc","points"))) %>%
+  relocate("rankChange",.after="rank")
 
 names(bulkData) <- c("Rank Only","Rank Change","Name","Assoc","Points")
 
@@ -144,3 +148,9 @@ ittf_data %>%
          title=list(title=cat("Points and Association for Top",
                               n_players,"Ranked Players",sep=" ")))
 ```
+
+## References
+
+1. [rvest Documentation](https://rvest.tidyverse.org/)
+
+1. [Dataquest](https://www.dataquest.io/blog/web-scraping-in-r-rvest/)
